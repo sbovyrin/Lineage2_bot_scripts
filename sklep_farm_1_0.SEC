@@ -1,0 +1,323 @@
+// begin with tp to town
+USEITEM(Свиток Телепорта[ID=736])
+Delay(30000)
+//---------------------------------------------
+// control section
+//---------------------------------------------
+Label(begin)
+CALL(MiddleUp)
+CALL(DownLeft)
+CALL(DownMiddle)
+CALL(DownRight)
+CALL(check)
+JMP(begin)
+//---------------------------------------------
+//check soulshot and hp
+//---------------------------------------------
+LABEL(check)
+ITEMCOUNT(Заряд Души Зверя[ID=6645],<,1000)
+{
+HistoryMsg(Soulshot hasn't enought)
+DELAY(2000)
+SET(FIGHTSTOP)
+SET(L2WALKER,DISABLE)
+DELAY(2000)
+USEITEM(Свиток Телепорта[ID=736])
+DELAY(30000)
+}
+Delay(1000)
+CharStatus(CHP,<,1)
+{
+HistoryMsg(Is Died)
+SET(FIGHTSTOP)
+SET(L2WALKER,DISABLE)
+Delay(1000)
+GoHome()
+delay(20000)
+}
+Delay(1000)
+Charstatus2(petcount,<,2)
+{
+Useskill2(11257)
+}
+Delay(20000)
+RETURN()
+//-------------------------------------------
+//if we are in up shutgart
+//-------------------------------------------
+label(MiddleUp)
+POSINRANGE(87354,-143094,-1328,1500)
+{
+SET(L2WALKER,DISABLE)
+MOVETO(87425,-142325,-1366)
+MOVETO(87384,-141420,-1368)
+MOVETO(87335,-140717,-1567)
+MOVETO(86445,-140168,-1567)
+Call(Buy)
+}
+Return()
+//-------------------------------------------
+//if we are in down-left shutgart
+//-------------------------------------------
+label(DownLeft)
+POSINRANGE(84172,-141549,-1536,1400)
+{
+SET(L2WALKER,DISABLE)
+MOVETO(85348,-141268,-1567)
+MOVETO(85544,-140681,-1567)
+MOVETO(86357,-140157,-1567)
+Call(Buy)
+}
+Return()
+//-------------------------------------------
+//if we are in middle shutgart
+//-------------------------------------------
+label(DownMiddle)
+POSINRANGE(87586,-139556,-1536,1500)
+{
+SET(L2WALKER,DISABLE)
+MOVETO(86430,-140154,-1567)
+Call(Buy)
+}
+Return()
+//-------------------------------------------
+//if we are in down-right shutgart
+//-------------------------------------------
+label(DownRight)
+POSINRANGE(90479,-141471,-1567,1300)
+{
+SET(L2WALKER,DISABLE)
+MOVETO(89288,-140949,-1567)
+MOVETO(88734,-140625,-1567)
+MOVETO(87711,-140386,-1567)
+MOVETO(86454,-140141,-1567)
+Call(Buy)
+}
+Return()
+//-------------------------------------------
+//go to store
+//-------------------------------------------
+LABEL(Buy)
+ITEMCOUNT(Заряд Души Зверя[ID=6645],<,1000)
+{
+HistoryMsg(Go to the PetShop)
+NPCSEL(Сароян[ID=31954])
+DELAY(1000)
+NPCDLG(Сароян[ID=31954])
+DELAY(1000)
+DLGSEL(Купить предмет для Питомца)
+DELAY(1555)
+SellItemShop2(6645|3031|737|736|33800|33801)
+DELAY(20000)
+NPCDLG(Сароян[ID=31954])
+DELAY(1000)
+DLGSEL(Купить предмет для Питомца)
+DELAY(1555)
+BUYITEM(Заряд Души Зверя[ID=6645],30000;)
+DELAY(20000)
+}
+DELAY(1555)
+ITEMCOUNT(Свиток Телепорта[ID=736],<,5)
+{
+HistoryMsg(Go to the scrolls shop)
+MOVETO(85886,-140861,-1567)
+MOVETO(85951,-141091,-1554)
+MOVETO(85745,-141340,-1554)
+DELAY(1555)
+NPCSEL(Пеле[ID=31952])
+DELAY(1555)
+NPCDLG(Пеле[ID=31952])
+DELAY(1555)
+DLGSEL(Купить расходные предметы)
+DELAY(1555)
+BUYITEM(Свиток Телепорта[ID=736],5;)
+DELAY(1555)
+MOVETO(85931,-141000,-1554)
+MOVETO(85832,-140662,-1567)
+MOVETO(87286,-140653,-1567)
+}
+Delay(2000)
+MOVETO(87286,-140653,-1567)
+MOVETO(87341,-141355,-1377)
+MOVETO(87292,-142604,-1366)
+MOVETO(87086,-143096,-1327)
+MOVETO(87059,-143437,-1319)
+Call(Tport)
+Return()
+//-------------------------------------------
+//tp to place of fight
+//-------------------------------------------
+LABEL(Tport)
+POSINRANGE(87059,-143437,-1319,400)
+{
+HistoryMsg(We are running to Teleport)
+delay(2000)
+NPCSEL(Билия[ID=31964])
+delay(2000)
+NPCDLG(Билия[ID=31964])
+delay(2000)
+DLGSEL(Телепортироваться)
+delay(2000)
+DLGSEL(1010571)
+DELAY(30000)
+loadconfig(FarmSklep.INI)
+Call(GoToSpot)
+}
+RETURN()
+//-------------------------------------------
+//selecting a random spot
+//-------------------------------------------
+LABEL(GoToSpot)
+SetVal(RandomChooseSpot,Rnd,1,6)
+delay(1000)
+GetVal(RandomChooseSpot,==,1)
+{
+HistoryMsg(Randomed 1)
+CALL(GoToSpot1)
+RETURN()
+}
+GetVal(RandomChooseSpot,==,2)
+{
+HistoryMsg(Randomed 2)
+CALL(GoToSpot2)
+RETURN()
+}
+GetVal(RandomChooseSpot,==,3)
+{
+HistoryMsg(Randomed 3)
+CALL(GoToSpot3)
+RETURN()
+}
+GetVal(RandomChooseSpot,==,4)
+{
+HistoryMsg(Randomed 4)
+CALL(GoToSpot4)
+RETURN()
+}
+GetVal(RandomChooseSpot,==,5)
+{
+HistoryMsg(Randomed 5)
+CALL(GoToSpot5)
+RETURN()
+}
+GetVal(RandomChooseSpot,==,6)
+{
+HistoryMsg(Randomed 6)
+CALL(GoToSpot6)
+RETURN()
+//-------------------------------------------
+//running to selected spot
+//-------------------------------------------
+LABEL(GoToSpot1)
+MOVETO(46413,-115936,-3778)
+MOVETO(45582,-116206,-3507)
+MOVETO(46048,-117291,-3549)
+MOVETO(46528,-118439,-3745)
+MOVETO(47382,-119560,-4055)
+MOVETO(46648,-120672,-4000)
+MOVETO(46861,-121211,-4104)
+MOVETO(46861,-121211,-4048)
+SET(RANGETYPE,DEFPOS,48075,-121960,-3440,1250)
+JMP(BeginFight)
+RETURN()
+
+LABEL(GoToSpot2)
+MOVETO(46413,-115936,-3778)
+MOVETO(45582,-116206,-3507)
+MOVETO(46048,-117291,-3549)
+MOVETO(46528,-118439,-3745)
+MOVETO(47382,-119560,-4055)
+MOVETO(46648,-120672,-4000)
+MOVETO(46861,-121211,-4104)
+MOVETO(46194,-122263,-4023)
+MOVETO(46546,-122350,-4080)
+MOVETO(46559,-122729,-4040)
+MOVETO(46190,-123225,-3777)
+MOVETO(46206,-123551,-3716)
+MOVETO(46206,-123551,-3664)
+SET(RANGETYPE,DEFPOS,46523,-124830,-3232,1250)
+JMP(BeginFight)
+RETURN()
+
+LABEL(GoToSpot3)
+MOVETO(46413,-115936,-3778)
+MOVETO(45582,-116206,-3507)
+MOVETO(46048,-117291,-3549)
+MOVETO(46528,-118439,-3745)
+MOVETO(47382,-119560,-4055)
+MOVETO(46648,-120672,-4000)
+MOVETO(46861,-121211,-4104)
+MOVETO(46194,-122263,-4023)
+MOVETO(46546,-122350,-4080)
+MOVETO(46559,-122729,-4040)
+MOVETO(46190,-123225,-3777)
+MOVETO(46723,-122810,-4042)
+MOVETO(46723,-122810,-3992)
+MOVETO(47107,-123482,-3917)
+MOVETO(48053,-123804,-4045)
+MOVETO(48053,-123804,-3992)
+MOVETO(48756,-123974,-3992)
+SET(RANGETYPE,DEFPOS,50071,-124941,-3248,1250)
+JMP(BeginFight)
+RETURN()
+
+LABEL(GoToSpot4)
+MOVETO(47872,-115972,-3774)
+MOVETO(48350,-115897,-3774)
+MOVETO(48453,-115611,-3771)
+MOVETO(49645,-115898,-3836)
+MOVETO(50307,-116328,-3814)
+MOVETO(50430,-116578,-3816)
+MOVETO(51390,-117233,-4286)
+MOVETO(51540,-117873,-4383)
+SET(RANGETYPE,DEFPOS,50248,-119100,-3728,1250)
+JMP(BeginFight)
+RETURN()
+
+LABEL(GoToSpot5)
+MOVETO(47872,-115972,-3774)
+MOVETO(48350,-115897,-3774)
+MOVETO(48453,-115611,-3771)
+MOVETO(49645,-115898,-3836)
+MOVETO(50307,-116328,-3814)
+MOVETO(50430,-116578,-3816)
+MOVETO(51390,-117233,-4286)
+MOVETO(51540,-117873,-4383)
+MOVETO(51905,-118249,-4377)
+MOVETO(52114,-118315,-4359)
+MOVETO(52456,-118713,-4302)
+MOVETO(52723,-119515,-4173)
+MOVETO(52908,-120045,-4030)
+MOVETO(53533,-120784,-3976)
+SET(RANGETYPE,DEFPOS,52256,-121930,-3440,1250)
+JMP(BeginFight)
+RETURN()
+
+LABEL(GoToSpot6)
+MOVETO(47872,-115972,-3774)
+MOVETO(48350,-115897,-3774)
+MOVETO(48453,-115611,-3771)
+MOVETO(49645,-115898,-3836)
+MOVETO(50307,-116328,-3814)
+MOVETO(50430,-116578,-3816)
+MOVETO(51390,-117233,-4286)
+MOVETO(51540,-117873,-4383)
+MOVETO(51905,-118249,-4377)
+MOVETO(52114,-118315,-4359)
+MOVETO(52456,-118713,-4302)
+MOVETO(52723,-119515,-4173)
+MOVETO(52908,-120045,-4030)
+MOVETO(53533,-120784,-3976)
+MOVETO(53827,-121317,-4078)
+MOVETO(54238,-122607,-4014)
+SET(RANGETYPE,DEFPOS,53970,-124952,-3208,1250)
+JMP(BeginFight)
+RETURN()
+//-------------------------------------------
+//begin fight
+//-------------------------------------------
+LABEL(BeginFight)
+SET(FIGHT,START)
+SET(L2WALKER,ENABLE)
+HistoryMsg(Fight is starting)
+RETURN()
